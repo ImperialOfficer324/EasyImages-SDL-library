@@ -10,6 +10,8 @@ SDL_Renderer * renderer;
 int RenderFromFile(char* filename,int x,int y,int w,int h);
 //render an image from a preloaded SDL surface
 int RenderFromSurface(SDL_Surface* surface,int x,int y,int w,int h);
+//render part of an image from a preloaded SDL surface
+int RenderPartialImageFromSurface(SDL_Surface* surface,int x,int y,int w,int h,int px,int py,int pw,int ph);
 //load all images needed for the game
 int LoadImages();
 //free all images loaded with LoadImages
@@ -18,5 +20,6 @@ int FreeImages();
 int BlitDisplay();
 
 /* image surfaces */
+SDL_Surface *MapBackground;
 
 #endif

@@ -1,15 +1,10 @@
-/* images.c - main C file for EasyImages library. */
-/*
-    add this file to your Makefile.
-    include the images.h header file into the project file you want to draw images from.
-    add neccessary information to the load.c file and add that to your Makefile as well.
-    call LoadImages at the beginning of your program, after the SDL initiation.
-*/
+/* images.c - load, display, then free images */
 #include <SDL.h>
 #include <SDL2/SDL_image.h>
+#include "game.h"
 #include "images.h"
 
-// loads the renderer and loads images from load.c
+// load images that are needed for the entire cycle. Other images can be loaded as needed
 int LoadImages(){
     //renderer
     renderer = SDL_CreateRenderer(screen,-1,0);
@@ -20,11 +15,11 @@ int LoadImages(){
     return 1;
 }
 
-int FreeImages(
+int FreeImages(){
+    return 1;
+}
 
 /* Display Images */
-    
-// displays a full PNG image loaded directly from a file
 int RenderFromFile(char* filename,int x,int y,int w,int h){
     SDL_Surface* surface;
     SDL_Texture* texture;
@@ -50,7 +45,6 @@ int RenderFromFile(char* filename,int x,int y,int w,int h){
     return 1;
 }
 
-// displays a full PNG image from a surface
 int RenderFromSurface(SDL_Surface* surface,int x,int y,int w,int h){
     SDL_Texture* texture;
     SDL_Rect rect;
@@ -69,7 +63,29 @@ int RenderFromSurface(SDL_Surface* surface,int x,int y,int w,int h){
     return 1;
 }
 
-//draws the contents of the renderer to the screen. call this every frame
+int RenderPartialImageFromSurface(SDL_Surface* surface,int x,int y,int w,int h,int px,int py,int pw,int ph){
+    SDL_Texture* texture;
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    SDL_Rect port;
+    port.x = px;
+    port.y = py;
+    port.w = pw;
+    port.h = ph;
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL){
+        printf("Error Loading Texture: %s\n",SDL_GetError());
+        return 0;
+    };
+    SDL_RenderCopy(renderer, texture, &port, &rect);
+    SDL_DestroyTexture(texture);
+    
+    return 1;
+}
+
 int BlitDisplay(){
     SDL_RenderPresent(renderer);
     SDL_RenderClear(renderer);
