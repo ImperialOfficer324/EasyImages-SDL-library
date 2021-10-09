@@ -1,10 +1,16 @@
 /* images.c - load, display, then free images */
 #include <SDL.h>
 #include <SDL2/SDL_image.h>
-#include "game.h"
 #include "images.h"
 
-// load images that are needed for the entire cycle. Other images can be loaded as needed
+/* LOAD IMAGES */
+/*
+    Loading Your Own Images:
+    1. Copy the commented block of code beneath the if(renderer... statement.
+    2. Replace the variables surrounded by <> with the requested values.
+    
+    *note: the surface must have been declared in images.h to work. Otherwise it is not a global variable.
+*/
 int LoadImages(){
     //renderer
     renderer = SDL_CreateRenderer(screen,-1,0);
@@ -12,6 +18,14 @@ int LoadImages(){
         printf("Error Loading Renderer: %s\n",SDL_GetError());
         return 0;
     };
+    
+    /* ***copy and uncomment this to load an image***
+    <image_name> = IMG_Load(<image_path>);
+    if (<image_name> == NULL){
+        printf("Error Loading Image: %s\n",SDL_GetError());
+        return 0;
+    };
+    */
     return 1;
 }
 
